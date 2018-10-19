@@ -1,0 +1,40 @@
+package car;
+
+public class Car {
+	String version;// 型号
+	double tank;// 油箱中汽油量
+	double oilConsumption;// 油耗
+
+	public Car(String version, double tank, double oilConsumption) {
+		this.version = version;
+		this.tank = tank;
+		this.oilConsumption = oilConsumption;
+	}
+
+	public double gas(double num) {// 汽车加油
+		this.tank += num;
+		System.out.println("加油后汽车油箱的汽油量为" + this.tank);
+		return this.tank;
+	}
+
+	public void run() {//汽车是否能开
+		if(tank>=5)
+			System.out.println("油箱的汽油量充足");
+		else if(tank>0)
+			System.out.println("油箱的汽油量不到5L，请尽快加油！！！");
+			
+	}
+
+	public void disp() {
+		System.out.println("该汽车的型号为" + this.version);
+		System.out.println("该汽车此时油箱的汽油量为" + this.tank+"升");
+		System.out.println("该汽车的油耗为" + this.oilConsumption + "千米/升");
+	}
+
+	public static void main(String[] args) {
+
+		Car car1 = new Car("奔驰", 50.0, 2.5);
+		car1.disp();
+	}
+
+}
