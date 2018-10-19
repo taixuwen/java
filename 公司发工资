@@ -1,0 +1,86 @@
+package company;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.TreeSet;
+
+public class Updataperson implements Comparable<Object> {//创建类实现comparable接口
+	static double TURNOVER=Math.random()*100000000;//公司年总营业额，假设在【0，100000000】之间
+	static double EXPENDITURE=40000000;//公司今年总支出+明年投资预计成本
+	int salary;//(15天或一个月)工资
+	int bonus;//月奖金
+	String birthday;//生日
+	String name;//姓名
+	double money;//年收入
+/*	Updateperson a;*/
+	public double mincome(int salary,int bonus) {//经理人的年收入
+		double income;
+		income=(salary+bonus)*12;
+		return income;
+	}
+	public double staffincome(int salary) {//员工的年收入
+		double income;
+		income=salary*12*2;
+		return income;
+	}
+	public double sincome(double stock) {//股东的年收入
+		double temp=(TURNOVER-EXPENDITURE)*stock;
+		double income;
+		if (temp>0)//盈利
+			income=temp;
+		else income=0;//亏损
+		return income;
+	}
+	public Updataperson(String name,String birthday,int salary,int bonus) {//经理人初始化
+		this.name=name;
+		this.birthday=birthday;
+		money=mincome(salary,bonus);
+	}
+	public Updataperson(String name,String birthday,int salary) {//员工初始化
+		this.name=name;
+		this.birthday=birthday;
+		money=staffincome(salary);		
+	}
+	public Updataperson(String name,String birthday,double stock) {//股东初始化
+		this.name=name;
+		this.birthday=birthday;
+		money=sincome(stock);
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Updataperson person1=new Updataperson("张三","1990.10.14",6000,400);//经理人
+		Updataperson person2=new Updataperson("李四","1970.1.1",2000);//员工
+		Updataperson person3=new Updataperson("王五","1998.9.9",0.35);//股东
+		TreeSet<Updataperson>tree=new TreeSet<Updataperson>(new Comparator<Updataperson>()
+				{
+
+					@Override
+					public int compare(Updataperson o1, Updataperson o2) {
+						
+						if(o1.name.compareTo(o2.name)>0) return 1;
+						if(o1.name.compareTo(o2.name)<0) return -1;
+						return 0;
+					}
+					
+				}
+		);
+		tree.add(person1);
+		tree.add(person2);
+		tree.add(person3);
+		
+		
+		Iterator<Updataperson>it=tree.iterator();//Set集合中的所有对象的迭代器
+		System.out.println("Set集合中的所有元素");
+		while(it.hasNext()) {
+			Updataperson person=(Updataperson)it.next();
+			System.out.println(person.name+' '+person.birthday+' '+person.money);
+		}
+	}
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
+	
+}
