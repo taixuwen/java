@@ -1,0 +1,132 @@
+文件1：Transportation.java
+
+package transportation;
+
+public abstract class Transportation {
+	String name;//交通方式名称
+	double ArrivalTime;//到达时间(从家到车站的时间  单位：分钟)
+	double ReturnTime;//返回时间(从车站家到家的时间  单位：分钟)
+	double TicketTime;//取票时间(单位：分钟)
+	double SecurityCheckTime;//安检时间(单位：分钟)
+	double WaitTime;//候车时间(单位：分钟)
+	double speed;//速度(单位： 公里/每小时)
+	double price;//单价(单位：元/公里)
+	public abstract void count(double distance) ;//计算消耗的时间和价格
+	public void print() {//调用抽象方法
+		
+	}
+}
+
+文件2：Car.java
+
+package transportation;
+
+public class Car extends Transportation {
+	double time;//总时间
+	double expense;//总花费
+	public Car() {
+		this.name="汽车";
+		this.ArrivalTime=26.7;
+		this.ReturnTime=31.8;
+		this.SecurityCheckTime=3.2;
+		this.WaitTime=10.0;
+		this.speed=80;
+		this.price=0.32;
+	}
+	public void count(double distance) {
+		time=ArrivalTime+ReturnTime+SecurityCheckTime+WaitTime+distance/(speed/60);
+		expense=distance/price;		
+	}
+	public void print() {//调用抽象方法
+		System.out.println("该距离选用汽车所花时间为："+this.time);
+		System.out.println("该距离选用汽车所花金钱为："+this.expense);
+	}
+	
+}
+
+文件3：Airport.java
+
+package transportation;
+
+public class Airport extends Transportation {
+	double time;//总时间
+	double expense;//总花费
+	public Airport() {
+		this.name="飞机";
+		this.ArrivalTime=35.6;
+		this.ReturnTime=38.8;
+		this.SecurityCheckTime=5.5;
+		this.WaitTime=15.7;
+		this.speed=400;
+		this.price=0.75;
+	}
+	public void count(double distance) {
+		time=ArrivalTime+ReturnTime+SecurityCheckTime+WaitTime+distance/(speed/60);
+		expense=distance/price;		
+	}
+	public void print() {//调用抽象方法
+		System.out.println("该距离选用飞机所花时间为："+this.time);
+		System.out.println("该距离选用飞机所花金钱为："+this.expense);
+	}
+	
+}
+
+文件4：HighSpeedTrain.java
+
+package transportation;
+
+public class HighSpeedTrain extends Transportation {
+	double time;//总时间
+	double expense;//总花费
+	public HighSpeedTrain() {
+		this.name="高铁";
+		this.ArrivalTime=21.2;
+		this.ReturnTime=24.3;
+		this.SecurityCheckTime=4.2;
+		this.WaitTime=11.9;
+		this.speed=220;
+		this.price=0.45;
+	}
+	public void count(double distance) {
+		time=ArrivalTime+ReturnTime+SecurityCheckTime+WaitTime+distance/(speed/60);
+		expense=distance/price;		
+	}
+	public void print() {//调用抽象方法
+		System.out.println("该距离选用高铁所花时间为："+this.time);
+		System.out.println("该距离选用高铁所花金钱为："+this.expense);
+	}
+	
+}
+
+文件5：Comtrol.java
+
+package transportation;
+import java.util.Scanner;
+
+public class Comtrol {
+	public static void main(String[] args) {
+		System.out.println("请输入出发地和目的地的距离(单位： 公里)：");
+		Scanner sc=new Scanner(System.in);//构造一个Scanner对象，其传入参数为System.in
+		double distance;
+		distance=sc.nextDouble();
+		Car car=new Car();
+		Airport airport=new Airport();
+		HighSpeedTrain train=new HighSpeedTrain();
+		car.count(distance);
+		car.print();
+		airport.count(distance);
+		airport.print();
+		train.count(distance);
+		train.print();
+	}
+}
+
+运行结果如下：
+请输入出发地和目的地的距离(单位： 公里)：
+100
+该距离选用汽车所花时间为：146.7
+该距离选用汽车所花金钱为：312.5
+该距离选用飞机所花时间为：110.60000000000001
+该距离选用飞机所花金钱为：133.33333333333334
+该距离选用高铁所花时间为：88.87272727272727
+该距离选用高铁所花金钱为：222.22222222222223
